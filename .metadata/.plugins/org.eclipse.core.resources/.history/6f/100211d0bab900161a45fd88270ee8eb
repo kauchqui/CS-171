@@ -1,0 +1,136 @@
+import java.util.Scanner;
+import java.util.*;
+
+
+
+class Hmwk6_qkauchi {
+
+	public void bfs(UserProfile social, int s)
+	{
+		//queue
+	}
+	
+	
+public static void main(String args[]){
+	Hashtable ht = new Hashtable();
+	
+	UserProfile socialMedia = new UserProfile();
+	int choiceentry = -1;
+	Scanner scanchoice = new Scanner(System.in);
+	do {
+	 System.out.println("Welcome to MyFriendsSpace!!! \n\nSelect from the following menu:\n\"1. Add/update user\",\n\"2. Search user\",\n\"3. Add friend for user\",\n\"4. Remove friend for user\",\n\"5. Find shortest path between 2 users\",\n\"0. Exit MyFriendsSpace\" ");
+	 choiceentry = scanchoice.nextInt();
+	 switch (choiceentry)
+	 {
+	case 1:
+	System.out.println("What is your name?");
+	Scanner newUser = new Scanner(System.in);
+	String userAdd = newUser.nextLine();
+	//char at here. truncate if name >5
+	if(ht.containsKey(userAdd) )
+	{	
+		System.out.println("That user is already in the social network.");
+	
+	}
+	else
+	{
+			
+			System.out.println("Thanks for joining the network, " +userAdd+ ". What is your age?");
+			String a = newUser.nextLine();
+			System.out.println("What is your location?");
+			String loc = newUser.nextLine();
+			users temp = new users(userAdd, a, loc);
+			socialMedia.put(userAdd, a, temp);
+			System.out.println(socialMedia.get(userAdd));
+			temp = socialMedia.user(userAdd);
+			System.out.println(temp.getLoc());
+			ht.put(userAdd, temp);
+			
+	}
+		break;
+	
+	 
+	 case 2:
+	 System.out.println("Who's info do you want?");
+	 Scanner userFind = new Scanner(System.in);
+	 String foundUser = userFind.nextLine();
+	 if(!ht.containsKey(foundUser) )
+		{	
+			System.out.println("That user does not exist");
+			
+		}
+	 else
+	 {
+	 users temp = new users(null,null,null);
+	 temp = socialMedia.user(foundUser);
+	 System.out.println("Name: "+temp.getName()+"\nLocation: "+temp.getLoc()+"\nAge: "+temp.getAge());
+	 
+	 }
+	 break;
+	 case 3:
+	 System.out.println("What is your name?");
+	 Scanner friendFind = new Scanner(System.in);
+	 String foundFriend = friendFind.nextLine();
+	 System.out.println("Who do you want to add?");
+	 Scanner addedFind = new Scanner(System.in);
+	 String addedFriend = addedFind.nextLine();
+	 if(!ht.containsKey(foundFriend) ||!ht.containsKey(addedFriend))
+		{	
+			System.out.println("One of those users does not exist!");
+			
+		}
+	 else
+	 {
+	 users tempFriends = new users(null,null,null);
+	 users tempFriends2 = new users(null,null,null);
+	 tempFriends = socialMedia.user(foundFriend);
+	 tempFriends2 = socialMedia.user(addedFriend);
+	 tempFriends.usersAdd(addedFriend);
+	 tempFriends2.usersAdd(foundFriend);
+	 System.out.println(tempFriends.getName()+" added " + tempFriends2.getName());
+	 System.out.println("This is "+tempFriends.getName()+ "'s friend list");
+	 tempFriends.printLink();
+	 }
+	 break;
+	 case 4:
+	 System.out.println("What is your name?");
+	 Scanner exFind = new Scanner(System.in);
+	 String removeFriend = exFind.nextLine();
+	 System.out.println("Who do you want to remove?");
+	 Scanner secFind = new Scanner(System.in);
+	 String deletedFriend = secFind.nextLine();
+	 if(!ht.containsKey(removeFriend) ||!ht.containsKey(deletedFriend))
+		{	
+			System.out.println("One of those users does not exist!");
+			
+		}
+	 else
+	 {
+	 users tempFriends = new users(null,null,null);
+	 users tempFriends2 = new users(null,null,null);
+	 tempFriends = socialMedia.user(removeFriend);
+	 tempFriends2 = socialMedia.user(deletedFriend);
+	 tempFriends.usersRemove(deletedFriend);
+	 tempFriends2.usersRemove(removeFriend);
+	 tempFriends.printLink();
+	 //System.out.println(tempFriends.getName()+" removed "+tempFriends2.getName());
+	 //System.out.println("This is "+ tempFriends.getName()+"'s friend list");
+	 
+	 }
+	 break;
+	 case 5:
+		 ArrayDeque<users> bfs = new ArrayDeque<users>();
+		 
+	 break;
+	 case 6:
+		 users temp = (users)ht.get("todd");
+		 System.out.println(temp.getAge());
+		 break;
+	 default:
+	 System.out.println("Choice must be a value between 0 and 5.");
+	 }
+	} while (choiceentry != 0); System.out.println("Bye, bye!");
+
+
+}
+}
